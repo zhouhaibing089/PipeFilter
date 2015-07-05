@@ -61,6 +61,18 @@ public class Pipe<T> {
     }
 
     /**
+     * Transform the data into another kind of data, of course a new {@code Pipe} got returned.
+     *
+     * @param transform the transform function
+     * @param <TO>      the type of transformed data
+     * @return another pipe which processing the transformed data.
+     */
+    public <TO> Pipe<TO> transform(Transform<T, TO> transform) {
+        mData = out();
+        return Pipe.in(transform.transform(mData));
+    }
+
+    /**
      * Get the output from {@code Pipe}
      *
      * @return the output
