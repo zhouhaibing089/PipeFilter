@@ -86,21 +86,17 @@ public class TransformTest {
                 temp.add(new Integer[]{sum});
             }
             return temp;
-        }).transform(integerArrayList -> {
-            List<Integer> integerList = new ArrayList<>();
-            for (Integer[] array : integerArrayList) {
-                integerList.add(array[0]);
-            }
-            return integerList;
-        }).transform(integerList -> {
-                    int max = integerList.get(0);
-                    for (int i = 1; i < integerList.size(); ++i) {
-                        if (integerList.get(i) > max) {
-                            max = integerList.get(i);
+        }).transform(integerArrayList -> integerArrayList.stream().map(array ->
+                array[0]).collect(Collectors.toList()))
+                .transform(integerList -> {
+                            int max = integerList.get(0);
+                            for (int i = 1; i < integerList.size(); ++i) {
+                                if (integerList.get(i) > max) {
+                                    max = integerList.get(i);
+                                }
+                            }
+                            return max;
                         }
-                    }
-                    return max;
-                }
-        ).out() == 15);
+                ).out() == 15);
     }
 }

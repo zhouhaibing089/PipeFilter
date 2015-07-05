@@ -20,7 +20,7 @@ public class Pipe<T> {
      */
     T mData;
 
-    private Pipe() {
+    protected Pipe() {
         // no public constructor
     }
 
