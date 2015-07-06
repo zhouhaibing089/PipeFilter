@@ -33,7 +33,7 @@ public class BasicTest {
      */
     @Test
     public void testListString() {
-        stringList = Pipe.in(stringList).then(data ->
+        stringList = Pipe.in(stringList).then((data, context) ->
                 data.stream().filter(string -> string.contains("a") && string.contains("b")
                         && string.contains("c")).collect(Collectors.toList())).out();
         Assert.assertTrue(stringList.size() == 1);

@@ -1,5 +1,7 @@
 package seaice.lib.pipefilter;
 
+import java.util.Map;
+
 /**
  * The {@code Filter} object contains a method to process data.
  *
@@ -8,6 +10,6 @@ package seaice.lib.pipefilter;
  */
 public interface Filter<T> {
 
-    T filter(T data);
+    T filter(T data, Map<String, Object> context);
 
 }

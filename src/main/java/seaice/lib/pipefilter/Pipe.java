@@ -2,6 +2,7 @@ package seaice.lib.pipefilter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The {@code Pipe} object maintains all the filters and the data processing.
@@ -19,6 +20,10 @@ public class Pipe<T> {
      * The to-be-processed data
      */
     T mData;
+    /**
+     * The context when executing all the filters
+     */
+    Map<String, Object> mContext;
 
     protected Pipe() {
         // no public constructor
@@ -50,6 +55,17 @@ public class Pipe<T> {
     }
 
     /**
+     * Setup the filter context.
+     *
+     * @param context the context map
+     * @return the pipe itself
+     */
+    public Pipe<T> with(Map<String, Object> context) {
+        mContext = context;
+        return this;
+    }
+
+    /**
      * Wrap another pipe into self.
      *
      * @param pipe another pipe
@@ -69,7 +85,7 @@ public class Pipe<T> {
      */
     public <TO> Pipe<TO> transform(Transform<T, TO> transform) {
         mData = out();
-        return Pipe.in(transform.transform(mData));
+        return Pipe.in(transform.transform(mData, mContext));
     }
 
     /**
@@ -84,7 +100,7 @@ public class Pipe<T> {
         }
         // apply all the filters
         for (Filter<T> filter : mFilterList) {
-            mData = filter.filter(mData);
+            mData = filter.filter(mData, mContext);
         }
         // yeah, we got the output
         return mData;
