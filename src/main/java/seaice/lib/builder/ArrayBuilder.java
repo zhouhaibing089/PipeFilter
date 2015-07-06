@@ -88,10 +88,13 @@ public class ArrayBuilder<E> extends Builder<E[]> {
         return this;
     }
 
+    /**
+     * Yeah, we got the array
+     *
+     * @return the built array
+     */
     @Override
-
     public E[] val() {
         return mData;
     }
-
 }
